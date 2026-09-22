@@ -7,3 +7,6 @@ Que lleva:
 - Menú en consola: con un switch para elegir qué hacer.
 - Funciones: añadir, ver lista, marcar como hecha y borrar.
 - Try-catch: para que no se rompa el programa si metes una letra por error.
+
+VOY A AÑADIR:
+- Prioridad que pda meter el usuario a una tarea al crearla

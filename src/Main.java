@@ -53,15 +53,38 @@ public class Main {
         System.out.print("Selecciona una opción: ");
     }
 
-    // metodo para pedir texto y guardar una nueva tarea
+    // metodo para pedir texto y prioridad, y guardar una nueva tarea
     private static void anadirTarea() {
         System.out.print("\nIntroduce la descripción de la tarea: ");
         String descripcion = scanner.nextLine();
-        if (!descripcion.trim().isEmpty()) { // si no hay descripcion eliminamos espacios
-            listaTareas.add(new Tarea(descripcion)); // añadimos una nueva tarea a la lista con su descripcion
-            System.out.println("-> Tarea añadida con éxito.\n");
-        } else {
+
+        if (descripcion.trim().isEmpty()) { // si no hay descripcion eliminamos espacios
             System.out.println("-> La descripción no puede estar vacía.\n");
+            return;
+        }
+
+        int prioridad = pedirPrioridad(); // pedimos la prioridad al usuario con validacion
+        if (prioridad == -1) {
+            System.out.println("-> Operación cancelada, prioridad no válida.\n");
+            return;
+        }
+
+        listaTareas.add(new Tarea(descripcion, prioridad)); // añadimos una nueva tarea a la lista con su descripcion y prioridad
+        System.out.println("-> Tarea añadida con éxito.\n");
+    }
+
+    // metodo nuevo para pedir la prioridad (1 baja, 2 media, 3 alta) validando la entrada
+    private static int pedirPrioridad() {
+        System.out.print("Introduce la prioridad (1 = Baja, 2 = Media, 3 = Alta): ");
+        try {
+            int prioridad = Integer.parseInt(scanner.nextLine());
+            if (prioridad >= 1 && prioridad <= 3) {
+                return prioridad;
+            } else {
+                return -1; // fuera de rango
+            }
+        } catch (NumberFormatException e) {
+            return -1; // entrada no numerica
         }
     }
 
