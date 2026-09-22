@@ -34,12 +34,15 @@ public class Main {
                     eliminarTarea();
                     break;
                 case 5:
+                    filtrarTareasPorPrioridad();
+                    break;
+                case 6:
                     System.out.println("¡Hasta luego!");
                     break;
                 default:
                     System.out.println("Opción no válida. Inténtalo de nuevo.\n");
             }
-        } while (opcion != 5);
+        } while (opcion != 6);
     }
 
     // metodo auxiliar para imprimir las opciones del menu
@@ -49,7 +52,8 @@ public class Main {
         System.out.println("2. Ver lista de tareas");
         System.out.println("3. Marcar tarea como completada");
         System.out.println("4. Eliminar tarea");
-        System.out.println("5. Salir");
+        System.out.println("5. Filtrar tareas por prioridad");
+        System.out.println("6. Salir");
         System.out.print("Selecciona una opción: ");
     }
 
@@ -97,6 +101,29 @@ public class Main {
             for (int i = 0; i < listaTareas.size(); i++) { // en caso de haber se hace bucle for para listarlas
                 System.out.println((i + 1) + ". " + listaTareas.get(i)); // se añade +1 por el indice 0
             }
+        }
+        System.out.println();
+    }
+
+    // metodo nuevo para filtrar y mostrar solo las tareas de una prioridad concreta
+    private static void filtrarTareasPorPrioridad() {
+        int prioridad = pedirPrioridad(); // reutilizamos el metodo que ya valida 1, 2 o 3
+        if (prioridad == -1) {
+            System.out.println("-> Prioridad no válida.\n");
+            return;
+        }
+
+        System.out.println("\n--- Tareas con prioridad " + prioridad + " ---");
+        boolean encontrada = false;
+        for (int i = 0; i < listaTareas.size(); i++) {
+            Tarea tarea = listaTareas.get(i);
+            if (tarea.getPrioridad() == prioridad) {
+                System.out.println((i + 1) + ". " + tarea); // se mantiene el numero original de la lista
+                encontrada = true;
+            }
+        }
+        if (!encontrada) {
+            System.out.println("No hay tareas con esa prioridad.");
         }
         System.out.println();
     }

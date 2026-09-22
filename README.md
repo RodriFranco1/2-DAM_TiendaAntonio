@@ -10,3 +10,4 @@ Que lleva:
 
 VOY A AÑADIR:
 - Prioridad que pda meter el usuario a una tarea al crearla
+- Voy a crear poder ordenar segun su prioridad, para esto he modificado el exit y pasarlo al 6 y crear el nuevo metodo
