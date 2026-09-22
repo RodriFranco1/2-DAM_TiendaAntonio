@@ -1,3 +1,5 @@
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -37,12 +39,15 @@ public class Main {
                     filtrarTareasPorPrioridad();
                     break;
                 case 6:
+                    guardarListadoEnArchivo();
+                    break;
+                case 7:
                     System.out.println("¡Hasta luego!");
                     break;
                 default:
                     System.out.println("Opción no válida. Inténtalo de nuevo.\n");
             }
-        } while (opcion != 6);
+        } while (opcion != 7);
     }
 
     // metodo auxiliar para imprimir las opciones del menu
@@ -53,7 +58,8 @@ public class Main {
         System.out.println("3. Marcar tarea como completada");
         System.out.println("4. Eliminar tarea");
         System.out.println("5. Filtrar tareas por prioridad");
-        System.out.println("6. Salir");
+        System.out.println("6. Guardar listado en archivo de texto");
+        System.out.println("7. Salir");
         System.out.print("Selecciona una opción: ");
     }
 
@@ -126,6 +132,31 @@ public class Main {
             System.out.println("No hay tareas con esa prioridad.");
         }
         System.out.println();
+    }
+
+    // metodo nuevo para guardar el listado de tareas en un archivo de texto, pidiendo confirmacion antes
+    private static void guardarListadoEnArchivo() {
+        System.out.print("\n¿Estás seguro de guardar el listado? (si/no): ");
+        String respuesta = scanner.nextLine().trim().toLowerCase();
+
+        if (!respuesta.equals("si")) {
+            System.out.println("-> Guardado cancelado.\n");
+            return;
+        }
+
+        // usamos try-with-resources para que el FileWriter se cierre automaticamente
+        try (FileWriter writer = new FileWriter("listado_tareas.txt")) {
+            if (listaTareas.isEmpty()) {
+                writer.write("No hay tareas registradas.\n");
+            } else {
+                for (int i = 0; i < listaTareas.size(); i++) {
+                    writer.write((i + 1) + ". " + listaTareas.get(i) + "\n"); // mismo formato que en pantalla
+                }
+            }
+            System.out.println("-> Listado guardado correctamente en listado_tareas.txt\n");
+        } catch (IOException e) {
+            System.out.println("-> Error al guardar el archivo: " + e.getMessage() + "\n");
+        }
     }
 
     // metodo para seleccionar una tarea de la lista y cambiar su estado
